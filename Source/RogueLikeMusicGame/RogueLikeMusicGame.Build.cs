@@ -8,6 +8,7 @@ public class RogueLikeMusicGame : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay" });
-	}
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay", "SoundVisualizations"});
+        PrivateDependencyModuleNames.AddRange(new string[] {"SoundVisualizations"});
+    }
 }
