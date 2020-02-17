@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "RogueLikeMusicGame/RogueLikeMusicGameGameMode.h"
 #include "RogueLikeMusicGameCharacter.generated.h"
 
 class UInputComponent;
@@ -137,6 +138,37 @@ public:
 	FORCEINLINE class USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
 	/** Returns FirstPersonCameraComponent subobject **/
 	FORCEINLINE class UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ //Our stuff
+	//------------Variables------------//
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stats)
+		int PlayerHealth;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stats)
+		int PlayerSheild;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		TMap<EPlayerUpgrades, bool> PlayerUpgradesList;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		TMap<EWeaponUpgrades, bool> WeaponUpgradesList;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		TMap<EWeapons, bool> WeaponsList;
+	//------------Functions------------//
+public:
+	UFUNCTION(BlueprintCallable, Category = Upgrades)
+		void UpgradePlayer(EPlayerUpgrades Upgrade);
+
+	UFUNCTION(BlueprintCallable, Category = Upgrades)
+		void UpgradeWeapons(EWeaponUpgrades Upgrade);
+
+	UFUNCTION(BlueprintCallable, Category = Upgrades)
+		void AddWeapon(EWeapons Weapon);
 
 };
 

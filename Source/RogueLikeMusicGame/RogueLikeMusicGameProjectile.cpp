@@ -36,7 +36,7 @@ void ARogueLikeMusicGameProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* 
 	// Only add impulse and destroy projectile if we hit a physics
 	if ((OtherActor != NULL) && (OtherActor != this) && (OtherComp != NULL) && OtherComp->IsSimulatingPhysics())
 	{
-		OtherComp->AddImpulseAtLocation(GetVelocity() * 100.0f, GetActorLocation());
+		OtherComp->AddImpulseAtLocation(GetVelocity() * 100.f, GetActorLocation());
 
 		Destroy();
 	}
