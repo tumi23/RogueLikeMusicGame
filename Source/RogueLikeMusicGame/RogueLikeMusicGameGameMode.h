@@ -6,6 +6,37 @@
 #include "GameFramework/GameModeBase.h"
 #include "RogueLikeMusicGameGameMode.generated.h"
 
+UENUM(BlueprintType)
+enum class EPlayerUpgrades : uint8
+{
+	DoubleJump,
+	Dodge,
+	Sprint,
+	Shockwave,
+	AutoAim,
+	Charm,
+};
+
+UENUM(BlueprintType)
+enum class EWeaponUpgrades : uint8
+{
+	Ricochet,
+	CriticalHit,
+	ShockBullets,
+	FireBullets,
+	FreezingBullets,
+};
+
+UENUM(BlueprintType)
+enum class EWeapons : uint8
+{
+	Glock,
+	AK47,
+	Shotgun,
+	RPG,
+	Katana,
+};
+
 UCLASS(minimalapi)
 class ARogueLikeMusicGameGameMode : public AGameModeBase
 {
@@ -13,6 +44,7 @@ class ARogueLikeMusicGameGameMode : public AGameModeBase
 
 public:
 	ARogueLikeMusicGameGameMode();
+
 };
 
 

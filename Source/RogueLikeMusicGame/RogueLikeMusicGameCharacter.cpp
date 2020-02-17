@@ -19,6 +19,7 @@ DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
 
 ARogueLikeMusicGameCharacter::ARogueLikeMusicGameCharacter()
 {
+	JumpMaxCount = 1;
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(55.f, 96.0f);
 
@@ -297,4 +298,52 @@ bool ARogueLikeMusicGameCharacter::EnableTouchscreenMovement(class UInputCompone
 	}
 	
 	return false;
+}
+
+void ARogueLikeMusicGameCharacter::UpgradePlayer(EPlayerUpgrades Upgrade)
+{
+	PlayerUpgradesList.Emplace(Upgrade, true);
+	switch (Upgrade)
+	{
+	case EPlayerUpgrades::DoubleJump:
+		JumpMaxCount = 2;
+		break;
+	case EPlayerUpgrades::Dodge:
+		break;
+	case EPlayerUpgrades::Sprint:
+		break;
+	case EPlayerUpgrades::Shockwave:
+		break;
+	case EPlayerUpgrades::AutoAim:
+		break;
+	case EPlayerUpgrades::Charm:
+		break;
+	default:
+		break;
+	}
+}
+
+void ARogueLikeMusicGameCharacter::UpgradeWeapons(EWeaponUpgrades Upgrade)
+{
+	WeaponUpgradesList.Emplace(Upgrade, true);
+	switch (Upgrade)
+	{
+	case EWeaponUpgrades::Ricochet:
+		break;
+	case EWeaponUpgrades::CriticalHit:
+		break;
+	case EWeaponUpgrades::ShockBullets:
+		break;
+	case EWeaponUpgrades::FireBullets:
+		break;
+	case EWeaponUpgrades::FreezingBullets:
+		break;
+	default:
+		break;
+	}
+}
+
+void ARogueLikeMusicGameCharacter::AddWeapon(EWeapons Weapon)
+{
+	WeaponsList.Emplace(Weapon, true);
 }
