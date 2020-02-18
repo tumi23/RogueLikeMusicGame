@@ -6,6 +6,8 @@
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
+#include "A_Bullet.h"
+#include "A_Missile.h"
 #include "GameFramework/InputSettings.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "Kismet/GameplayStatics.h"
@@ -155,16 +157,23 @@ void ARogueLikeMusicGameCharacter::OnFire()
 			}
 			else
 			{
-				const FRotator SpawnRotation = GetControlRotation();
-				// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
-				const FVector SpawnLocation = ((FP_MuzzleLocation != nullptr) ? FP_MuzzleLocation->GetComponentLocation() : GetActorLocation()) + SpawnRotation.RotateVector(GunOffset);
-
-				//Set Spawn Collision Handling Override
-				FActorSpawnParameters ActorSpawnParams;
-				ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
-
-				// spawn the projectile at the muzzle
-				World->SpawnActor<ARogueLikeMusicGameProjectile>(ProjectileClass, SpawnLocation, SpawnRotation, ActorSpawnParams);
+				switch (EquippedWeapon)
+				{
+				case EWeapons::Glock:
+					FireGlock();
+					break;
+				case EWeapons::AK47:
+					break;
+				case EWeapons::Shotgun:
+					break;
+				case EWeapons::RPG:
+					FireRPG();
+					break;
+				case EWeapons::Katana:
+					break;
+				default:
+					break;
+				}
 			}
 		}
 	}
@@ -185,6 +194,44 @@ void ARogueLikeMusicGameCharacter::OnFire()
 			AnimInstance->Montage_Play(FireAnimation, 1.f);
 		}
 	}
+}
+
+//Fire functions
+void ARogueLikeMusicGameCharacter::FireGlock()
+{
+	const FRotator SpawnRotation = GetControlRotation();
+	// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
+	const FVector SpawnLocation = ((FP_MuzzleLocation != nullptr) ? FP_MuzzleLocation->GetComponentLocation() : GetActorLocation()) + SpawnRotation.RotateVector(GunOffset);
+
+	// spawn the projectile at the muzzle
+	//GetWorld()->SpawnActor<ARogueLikeMusicGameProjectile>(ProjectileClass, SpawnLocation, SpawnRotation);
+	Shoot(SpawnLocation, SpawnRotation);
+}
+
+void ARogueLikeMusicGameCharacter::FireAK()
+{
+
+}
+
+void ARogueLikeMusicGameCharacter::FireRPG()
+{
+	const FRotator SpawnRotation = GetControlRotation();
+	// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
+	const FVector SpawnLocation = ((FP_MuzzleLocation != nullptr) ? FP_MuzzleLocation->GetComponentLocation() : GetActorLocation()) + SpawnRotation.RotateVector(GunOffset);
+
+	// spawn the projectile at the muzzle
+	//GetWorld()->SpawnActor<ARogueLikeMusicGameProjectile>(ProjectileClass, SpawnLocation, SpawnRotation);
+	Shoot(SpawnLocation, SpawnRotation);
+}
+
+void ARogueLikeMusicGameCharacter::FireShotgun()
+{
+
+}
+
+void ARogueLikeMusicGameCharacter::SwingSword()
+{
+
 }
 
 void ARogueLikeMusicGameCharacter::OnResetVR()
@@ -346,4 +393,29 @@ void ARogueLikeMusicGameCharacter::UpgradeWeapons(EWeaponUpgrades Upgrade)
 void ARogueLikeMusicGameCharacter::AddWeapon(EWeapons Weapon)
 {
 	WeaponsList.Emplace(Weapon, true);
+}
+
+void ARogueLikeMusicGameCharacter::SwitchEquippedWeapon(EWeapons Weapon)
+{
+	EquippedWeapon = Weapon;
+
+	switch (Weapon)
+	{
+	case EWeapons::Glock:
+
+		break;
+	case EWeapons::AK47:
+
+		break;
+	case EWeapons::Shotgun:
+
+		break;
+	case EWeapons::RPG:
+
+		break;
+	case EWeapons::Katana:
+		break;
+	default:
+		break;
+	}
 }
