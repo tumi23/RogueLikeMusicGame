@@ -35,6 +35,15 @@ public:
 	UFUNCTION(BlueprintCallable)
 		void UpdateVisualization();
 
+	UFUNCTION(BlueprintCallable)
+		void RegisterMesh(AA_Mesh* NewMesh) { if (!Meshes.Contains(NewMesh)) Meshes.Add(NewMesh); };
+	UFUNCTION(BlueprintCallable)
+		void RegisterLight(AA_Light* NewLight) { if (!Lights.Contains(NewLight)) Lights.Add(NewLight); };
+	UFUNCTION(BlueprintCallable)
+		void DeRegisterMeshes(AA_Mesh* NewMesh) { Meshes.Empty(); };
+	UFUNCTION(BlueprintCallable)
+		void DeRegisterLights(AA_Light* NewLight) { Lights.Empty(); };
+
 	UFUNCTION()
 		void GetPlaybackPercentage(const USoundWave* PlayingWave, const float PlaybackPercent);
 	UFUNCTION(BlueprintImplementableEvent)

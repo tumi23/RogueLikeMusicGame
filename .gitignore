@@ -12,3 +12,4 @@ Binaries
 *.xcodeproj
 *.xcworkspace
 *.vs/
+*_BuiltData.uasset
