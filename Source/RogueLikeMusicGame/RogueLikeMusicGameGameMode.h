@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include "A_MusicManager.h"
 #include "RogueLikeMusicGameGameMode.generated.h"
 
 UENUM(BlueprintType)
@@ -45,6 +46,12 @@ class ARogueLikeMusicGameGameMode : public AGameModeBase
 public:
 	ARogueLikeMusicGameGameMode();
 
+public:
+	void SetMusicManager(AA_MusicManager* NewManager) { MusicManager = NewManager; };
+
+public:
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Music")
+		AA_MusicManager* MusicManager;
 };
 
 

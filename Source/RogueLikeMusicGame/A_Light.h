@@ -17,7 +17,9 @@ public:
 	AA_Light();
 
 //private:
-	//virtual void BeginPlay() override;
+	virtual void BeginPlay() override;
+	UFUNCTION()
+		void RegisterSelf();
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		class UPointLightComponent* Light;
