@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "GameFramework/DamageType.h"
 #include "RogueLikeMusicGameProjectile.generated.h"
 
 UCLASS(config=Game)
@@ -20,11 +21,14 @@ class ARogueLikeMusicGameProjectile : public AActor
 	class UProjectileMovementComponent* ProjectileMovement;
 
 public:
+	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+		int Damage = 1;
+
 	ARogueLikeMusicGameProjectile();
 
 	/** called when projectile hits something */
 	UFUNCTION()
-	void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
+		virtual void OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit);
 
 	/** Returns CollisionComp subobject **/
 	FORCEINLINE class USphereComponent* GetCollisionComp() const { return CollisionComp; }

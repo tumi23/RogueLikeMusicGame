@@ -2,6 +2,7 @@
 
 
 #include "A_MusicManager.h"
+#include "RogueLikeMusicGameGameMode.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values
@@ -17,6 +18,8 @@ AA_MusicManager::AA_MusicManager()
 void AA_MusicManager::BeginPlay()
 {
 	Super::BeginPlay();
+	ARogueLikeMusicGameGameMode* GameMode = Cast<ARogueLikeMusicGameGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
+	GameMode->SetMusicManager(this);
 	SetNewTrack();
 }
 
@@ -48,21 +51,6 @@ void AA_MusicManager::GetPlaybackPercentage(const USoundWave* PlayingWave, const
 void AA_MusicManager::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	// Find all lights and meshes and cast them to the correct class so we can use them in the audio visualization
-	TArray<AActor*> AllActors;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AA_Light::StaticClass(), AllActors);
-	Lights.Empty();
-	for (auto& entry : AllActors)
-	{
-		Lights.Add(Cast<AA_Light>(entry));
-	}
-	AllActors.Empty();
-	Meshes.Empty();
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AA_Mesh::StaticClass(), AllActors);
-	for (auto& entry : AllActors)
-	{
-		Meshes.Add(Cast<AA_Mesh>(entry));
-	}
 }
 
 void AA_MusicManager::UpdateVisualization()

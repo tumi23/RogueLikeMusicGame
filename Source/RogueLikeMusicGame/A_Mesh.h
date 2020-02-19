@@ -15,6 +15,9 @@ class ROGUELIKEMUSICGAME_API AA_Mesh : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AA_Mesh();
+
+	virtual void BeginPlay() override;
+	void RegisterSelf();
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		class UStaticMeshComponent* Mesh;
