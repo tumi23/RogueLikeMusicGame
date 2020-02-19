@@ -66,7 +66,7 @@ public:
 	FVector GunOffset;
 
 	/** Projectile class to spawn */
-	UPROPERTY(EditDefaultsOnly, Category=Projectile)
+	UPROPERTY(EditAnywhere, Category=Projectile)
 	TSubclassOf<class ARogueLikeMusicGameProjectile> ProjectileClass;
 
 	/** Sound to play each time we fire */
@@ -150,7 +150,11 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stats)
 		int PlayerSheild;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stats)
+		EWeapons EquippedWeapon = EWeapons::Glock;
 
+	//Lists of aquired items
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		TMap<EPlayerUpgrades, bool> PlayerUpgradesList;
 
@@ -170,5 +174,17 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Upgrades)
 		void AddWeapon(EWeapons Weapon);
 
+	UFUNCTION(BlueprintCallable, Category = Upgrades)
+		void SwitchEquippedWeapon(EWeapons Weapon);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Gun")
+		void Shoot(FVector SpawnLocation, FRotator SpawnRotation);
+
+	//Fire functions
+	void FireGlock();
+	void FireAK();
+	void FireRPG();
+	void FireShotgun();
+	void SwingSword();
 };
 
