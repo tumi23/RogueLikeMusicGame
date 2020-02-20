@@ -30,7 +30,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	void SetNewTrack();
+	UFUNCTION(BlueprintCallable)
+		void SetNewTrack();
 
 	UFUNCTION(BlueprintCallable)
 		void UpdateVisualization();
@@ -52,6 +53,8 @@ public:
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Audio", meta = (AllowPrivateAccess = "true"))
 		class UAudioComponent* MusicComponent;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Audio", meta = (AllowPrivateAccess = "true"))
+		class UAudioComponent* MusicComponent2;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
 		TArray<USoundWave*> MusicTracks;
 	TArray<USoundWave*> AlreadyPlayedTracks;

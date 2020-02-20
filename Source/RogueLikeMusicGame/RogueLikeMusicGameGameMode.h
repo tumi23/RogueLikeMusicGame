@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include "A_AI_Spawner.h"
+#include "A_Player_SpawnLocation.h"
 #include "A_MusicManager.h"
 #include "RogueLikeMusicGameGameMode.generated.h"
 
@@ -48,6 +50,10 @@ public:
 
 public:
 	void SetMusicManager(AA_MusicManager* NewManager) { MusicManager = NewManager; };
+	UFUNCTION(BlueprintCallable)
+		void GetSpawnLocationInLevel(ULevel* Level, FVector& SpawnLocation);
+	UFUNCTION(BlueprintCallable)
+		AA_AI_Spawner* GetAISpawnerInLevel(ULevel* Level);
 
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Music")

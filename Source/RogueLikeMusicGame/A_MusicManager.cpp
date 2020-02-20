@@ -11,6 +11,7 @@ AA_MusicManager::AA_MusicManager()
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	MusicComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("Audio Component"));
+	MusicComponent2 = CreateDefaultSubobject<UAudioComponent>(TEXT("Audio Component 2"));
 	MusicComponent->OnAudioPlaybackPercent.AddDynamic(this, &AA_MusicManager::GetPlaybackPercentage);
 }
 
@@ -35,8 +36,20 @@ void AA_MusicManager::SetNewTrack()
 		}
 	}
 	float RandTrack = FMath::RandRange(0, MusicTracks.Num() - 1);
-	MusicComponent->SetSound(MusicTracks[RandTrack]);
-	MusicComponent->Play();
+	if (MusicComponent->IsPlaying())
+	{
+		MusicComponent->FadeOut(1.f, 1);
+		MusicComponent2->SetSound(MusicTracks[RandTrack]);
+		MusicComponent2->Play();
+		MusicComponent2->FadeIn(1.f);
+	}
+	else
+	{
+		MusicComponent2->FadeOut(1.f, 1);
+		MusicComponent->SetSound(MusicTracks[RandTrack]);
+		MusicComponent->Play();
+		MusicComponent->FadeIn(1.f);
+	}
 	CurrentPlayingTrack = MusicTracks[RandTrack];
 	AlreadyPlayedTracks.Add(MusicTracks[RandTrack]);
 	MusicTracks.RemoveAt(RandTrack);

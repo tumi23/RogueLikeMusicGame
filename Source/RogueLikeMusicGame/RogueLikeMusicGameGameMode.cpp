@@ -15,3 +15,26 @@ ARogueLikeMusicGameGameMode::ARogueLikeMusicGameGameMode()
 	// use our custom HUD class
 	HUDClass = ARogueLikeMusicGameHUD::StaticClass();
 }
+
+void ARogueLikeMusicGameGameMode::GetSpawnLocationInLevel(ULevel* Level, FVector& SpawnLocation)
+{
+	for (auto& entry : Level->Actors)
+	{
+		if (entry->IsA<AA_Player_SpawnLocation>())
+		{
+			SpawnLocation = entry->GetActorLocation();
+			return;
+		}
+	}
+	SpawnLocation = FVector::ZeroVector;
+}
+
+AA_AI_Spawner* ARogueLikeMusicGameGameMode::GetAISpawnerInLevel(ULevel* Level)
+{
+	for (auto& entry : Level->Actors)
+	{
+		if (entry->IsA<AA_AI_Spawner>())
+			return Cast<AA_AI_Spawner>(entry);
+	}
+	return nullptr;
+}
