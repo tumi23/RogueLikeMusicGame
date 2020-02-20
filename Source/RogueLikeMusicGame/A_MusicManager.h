@@ -38,6 +38,11 @@ public:
 		void StartShopTrack();
 
 	UFUNCTION(BlueprintCallable)
+		void MusicFinished();
+	UFUNCTION(BlueprintCallable)
+		void MiscFinished();
+
+	UFUNCTION(BlueprintCallable)
 		void UpdateVisualization();
 
 	UFUNCTION(BlueprintCallable)
@@ -83,4 +88,6 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, Category = "Audio")
 		float PlaybackTime = 0.f;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Audio")
+		bool bInShop = false;
 };

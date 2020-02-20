@@ -15,6 +15,9 @@ AA_MusicManager::AA_MusicManager()
 	MiscComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("Misc Audio Component"));
 	MusicComponent->OnAudioPlaybackPercent.AddDynamic(this, &AA_MusicManager::GetPlaybackPercentage);
 	MusicComponent2->OnAudioPlaybackPercent.AddDynamic(this, &AA_MusicManager::GetPlaybackPercentage);
+	MusicComponent2->OnAudioFinished.AddDynamic(this, &AA_MusicManager::MusicFinished);
+	MusicComponent->OnAudioFinished.AddDynamic(this, &AA_MusicManager::MusicFinished);
+	MiscComponent ->OnAudioFinished.AddDynamic(this, &AA_MusicManager::MiscFinished);
 	MiscComponent->OnAudioPlaybackPercent.AddDynamic(this, &AA_MusicManager::GetPlaybackPercentage);
 }
 
@@ -25,6 +28,22 @@ void AA_MusicManager::BeginPlay()
 	ARogueLikeMusicGameGameMode* GameMode = Cast<ARogueLikeMusicGameGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
 	GameMode->SetMusicManager(this);
 	StartIntroTrack();
+}
+
+void AA_MusicManager::MusicFinished()
+{
+	if (!MiscComponent->IsPlaying())
+	{
+		SetNewTrack();
+	}
+}
+
+void AA_MusicManager::MiscFinished()
+{
+	if (bInShop)
+	{
+		StartShopTrack();
+	}
 }
 
 void AA_MusicManager::StartIntroTrack()
