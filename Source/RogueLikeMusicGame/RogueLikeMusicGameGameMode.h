@@ -52,6 +52,8 @@ public:
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Music")
 		AA_MusicManager* MusicManager;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Music")
+		int32 Level = 0;
 };
 
 
