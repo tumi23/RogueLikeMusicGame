@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "RogueLikeMusicGame/RogueLikeMusicGameGameMode.h"
+#include "PhysicsEngine/RadialForceComponent.h"
 #include "RogueLikeMusicGameCharacter.generated.h"
 
 class UInputComponent;
@@ -141,15 +142,20 @@ public:
 
 
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////
- //Our stuff
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+																			// Our stuff //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	//------------Variables------------//
 public:
+	UPROPERTY(EditAnywhere, Category = Projectile)
+		URadialForceComponent* Force;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stats)
 		int PlayerHealth;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stats)
-		int PlayerSheild;
+		int PlayerShield;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stats)
 		EWeapons EquippedWeapon = EWeapons::Glock;
@@ -163,6 +169,8 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		TMap<EWeapons, bool> WeaponsList;
+
+
 	//------------Functions------------//
 public:
 	UFUNCTION(BlueprintCallable, Category = Upgrades)
@@ -177,8 +185,13 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Upgrades)
 		void SwitchEquippedWeapon(EWeapons Weapon);
 
+	UFUNCTION(BlueprintCallable, Category = Upgrades)
+		TArray<AActor*> DoShockwave();
+
 	UFUNCTION(BlueprintImplementableEvent, Category = "Gun")
 		void Shoot(FVector SpawnLocation, FRotator SpawnRotation);
+
+
 
 	//Fire functions
 	void FireGlock();
