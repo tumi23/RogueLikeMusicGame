@@ -148,11 +148,35 @@ public:
 
 	//------------Variables------------//
 public:
-	UPROPERTY(EditAnywhere, Category = Projectile)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Projectile)
 		URadialForceComponent* Force;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Stats)
+		bool bIsHoldingMouse;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stats)
 		int PlayerHealth;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stats)
+		float FireRateMultiplier = 0.75;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stats)
+		float AmmoMultiplier = 1.5;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stats)
+		int ShownAmmo;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stats)
+		int GlockAmmo = 1000000;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stats)
+		int AKAmmo = 80;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stats)
+		int ShotgunAmmo = 20;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stats)
+		int RPGAmmo = 12;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stats)
 		int PlayerShield;
@@ -191,9 +215,11 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Gun")
 		void Shoot(FVector SpawnLocation, FRotator SpawnRotation);
 
-
+	FTimerHandle ShootHoldTimer;
 
 	//Fire functions
+	void StopFire();
+
 	void FireGlock();
 	void FireAK();
 	void FireRPG();

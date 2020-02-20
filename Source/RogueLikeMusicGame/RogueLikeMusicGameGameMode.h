@@ -23,7 +23,7 @@ enum class EWeaponUpgrades : uint8
 {
 	Ricochet,
 	CriticalHit,
-	ShockBullets,
+	BurstFire,
 	FireBullets,
 	FreezingBullets,
 };

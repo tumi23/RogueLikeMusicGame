@@ -8,6 +8,8 @@
 #include "Components/InputComponent.h"
 #include "A_Bullet.h"
 #include "A_Missile.h"
+#include "TimerManager.h"
+#include "GameFramework/Actor.h"
 #include "GameFramework/InputSettings.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "Kismet/GameplayStatics.h"
@@ -126,6 +128,8 @@ void ARogueLikeMusicGameCharacter::SetupPlayerInputComponent(class UInputCompone
 
 	// Bind fire event
 	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ARogueLikeMusicGameCharacter::OnFire);
+	PlayerInputComponent->BindAction("Fire", IE_Released, this, &ARogueLikeMusicGameCharacter::StopFire);
+
 
 	// Enable touchscreen input
 	EnableTouchscreenMovement(PlayerInputComponent);
@@ -167,8 +171,14 @@ void ARogueLikeMusicGameCharacter::OnFire()
 					FireGlock();
 					break;
 				case EWeapons::AK47:
+					if (!bIsHoldingMouse)
+					{
+						bIsHoldingMouse = true;
+						FireAK();
+					}
 					break;
 				case EWeapons::Shotgun:
+					FireShotgun();
 					break;
 				case EWeapons::RPG:
 					FireRPG();
@@ -181,7 +191,7 @@ void ARogueLikeMusicGameCharacter::OnFire()
 			}
 		}
 	}
-
+	/*
 	// try and play the sound if specified
 	if (FireSound != NULL)
 	{
@@ -198,6 +208,12 @@ void ARogueLikeMusicGameCharacter::OnFire()
 			AnimInstance->Montage_Play(FireAnimation, 1.f);
 		}
 	}
+	*/
+}
+void ARogueLikeMusicGameCharacter::StopFire()
+{
+	bIsHoldingMouse = false;
+	GetWorldTimerManager().ClearTimer(ShootHoldTimer);
 }
 
 //Fire functions
@@ -214,7 +230,19 @@ void ARogueLikeMusicGameCharacter::FireGlock()
 
 void ARogueLikeMusicGameCharacter::FireAK()
 {
+	const FRotator SpawnRotation = GetControlRotation();
+	// MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
+	const FVector SpawnLocation = ((FP_MuzzleLocation != nullptr) ? FP_MuzzleLocation->GetComponentLocation() : GetActorLocation()) + SpawnRotation.RotateVector(GunOffset);
 
+	// spawn the projectile at the muzzle
+	//GetWorld()->SpawnActor<ARogueLikeMusicGameProjectile>(ProjectileClass, SpawnLocation, SpawnRotation);
+	if (bIsHoldingMouse)
+		Shoot(SpawnLocation, SpawnRotation);
+
+	if (bIsHoldingMouse)
+	{
+		GetWorldTimerManager().SetTimer(ShootHoldTimer, this, &ARogueLikeMusicGameCharacter::FireAK, 0.2f * FireRateMultiplier, false);
+	}
 }
 
 void ARogueLikeMusicGameCharacter::FireRPG()
@@ -383,7 +411,7 @@ void ARogueLikeMusicGameCharacter::UpgradeWeapons(EWeaponUpgrades Upgrade)
 		break;
 	case EWeaponUpgrades::CriticalHit:
 		break;
-	case EWeaponUpgrades::ShockBullets:
+	case EWeaponUpgrades::BurstFire:
 		break;
 	case EWeaponUpgrades::FireBullets:
 		break;
@@ -402,20 +430,20 @@ void ARogueLikeMusicGameCharacter::AddWeapon(EWeapons Weapon)
 void ARogueLikeMusicGameCharacter::SwitchEquippedWeapon(EWeapons Weapon)
 {
 	EquippedWeapon = Weapon;
-
+	bIsHoldingMouse = false;
 	switch (Weapon)
 	{
 	case EWeapons::Glock:
-
+		ShownAmmo = GlockAmmo;
 		break;
 	case EWeapons::AK47:
-
+		ShownAmmo = AKAmmo;
 		break;
 	case EWeapons::Shotgun:
-
+		ShownAmmo = ShotgunAmmo;
 		break;
 	case EWeapons::RPG:
-
+		ShownAmmo = RPGAmmo;
 		break;
 	case EWeapons::Katana:
 		break;
