@@ -32,6 +32,10 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void SetNewTrack();
+	UFUNCTION(BlueprintCallable)
+		void StartIntroTrack();
+	UFUNCTION(BlueprintCallable)
+		void StartShopTrack();
 
 	UFUNCTION(BlueprintCallable)
 		void UpdateVisualization();
@@ -55,8 +59,14 @@ public:
 		class UAudioComponent* MusicComponent;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Audio", meta = (AllowPrivateAccess = "true"))
 		class UAudioComponent* MusicComponent2;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Audio", meta = (AllowPrivateAccess = "true"))
+		class UAudioComponent* MiscComponent;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
 		TArray<USoundWave*> MusicTracks;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
+		USoundWave* StartTrack;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
+		USoundWave* ShopTrack;
 	TArray<USoundWave*> AlreadyPlayedTracks;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
 		USoundWave* CurrentPlayingTrack;

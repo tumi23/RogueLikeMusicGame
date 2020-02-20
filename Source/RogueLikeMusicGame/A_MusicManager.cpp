@@ -12,7 +12,10 @@ AA_MusicManager::AA_MusicManager()
 	PrimaryActorTick.bCanEverTick = true;
 	MusicComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("Audio Component"));
 	MusicComponent2 = CreateDefaultSubobject<UAudioComponent>(TEXT("Audio Component 2"));
+	MiscComponent = CreateDefaultSubobject<UAudioComponent>(TEXT("Misc Audio Component"));
 	MusicComponent->OnAudioPlaybackPercent.AddDynamic(this, &AA_MusicManager::GetPlaybackPercentage);
+	MusicComponent2->OnAudioPlaybackPercent.AddDynamic(this, &AA_MusicManager::GetPlaybackPercentage);
+	MiscComponent->OnAudioPlaybackPercent.AddDynamic(this, &AA_MusicManager::GetPlaybackPercentage);
 }
 
 // Called when the game starts or when spawned
@@ -21,11 +24,37 @@ void AA_MusicManager::BeginPlay()
 	Super::BeginPlay();
 	ARogueLikeMusicGameGameMode* GameMode = Cast<ARogueLikeMusicGameGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
 	GameMode->SetMusicManager(this);
-	SetNewTrack();
+	StartIntroTrack();
+}
+
+void AA_MusicManager::StartIntroTrack()
+{
+	if (StartTrack)
+	{
+		MiscComponent->SetSound(StartTrack);
+		CurrentPlayingTrack = StartTrack;
+		MiscComponent->Play();
+	}
+}
+
+void AA_MusicManager::StartShopTrack()
+{
+	if (MusicComponent->IsPlaying())
+		MusicComponent->FadeOut(1.f, 0.f);
+	if (MusicComponent2->IsPlaying())
+		MusicComponent2->FadeOut(1.f, 0.f);
+	if (ShopTrack)
+	{
+		MiscComponent->SetSound(ShopTrack);
+		MiscComponent->Play();
+		MiscComponent->FadeIn(1.f);
+	}
 }
 
 void AA_MusicManager::SetNewTrack()
 {
+	if (MiscComponent->IsPlaying())
+		MiscComponent->FadeOut(1.f, 0.f);
 	if (MusicTracks.Num() <= 0 && AlreadyPlayedTracks.Num() <= 0)
 		return;
 	if (MusicTracks.Num() <= 0)
@@ -38,14 +67,14 @@ void AA_MusicManager::SetNewTrack()
 	float RandTrack = FMath::RandRange(0, MusicTracks.Num() - 1);
 	if (MusicComponent->IsPlaying())
 	{
-		MusicComponent->FadeOut(1.f, 1);
+		MusicComponent->FadeOut(1.f, 0.f);
 		MusicComponent2->SetSound(MusicTracks[RandTrack]);
 		MusicComponent2->Play();
 		MusicComponent2->FadeIn(1.f);
 	}
 	else
 	{
-		MusicComponent2->FadeOut(1.f, 1);
+		MusicComponent2->FadeOut(1.f, 0.f);
 		MusicComponent->SetSound(MusicTracks[RandTrack]);
 		MusicComponent->Play();
 		MusicComponent->FadeIn(1.f);
