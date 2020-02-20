@@ -21,7 +21,11 @@ DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
 
 ARogueLikeMusicGameCharacter::ARogueLikeMusicGameCharacter()
 {
+	Force = CreateDefaultSubobject<URadialForceComponent>(TEXT("Force Component"));
+	Force->SetupAttachment(RootComponent);
+
 	JumpMaxCount = 1;
+
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(55.f, 96.0f);
 
@@ -418,4 +422,26 @@ void ARogueLikeMusicGameCharacter::SwitchEquippedWeapon(EWeapons Weapon)
 	default:
 		break;
 	}
+}
+
+TArray<AActor*> ARogueLikeMusicGameCharacter::DoShockwave()
+{
+	TArray<AActor*> ReturnArray;
+	FCollisionQueryParams TraceParams;
+	TraceParams.bTraceComplex = true;
+	//Ignore Actors
+	TraceParams.AddIgnoredActor(this);
+	//Re-initialize hit info
+	TArray<FOverlapResult> Overlap;
+	FCollisionShape collisionShape = FCollisionShape::MakeSphere(Force->Radius);
+
+	if (GetWorld()->OverlapMultiByChannel(Overlap, GetActorLocation(), GetActorForwardVector().ToOrientationQuat(), ECC_GameTraceChannel2, collisionShape, TraceParams))
+	{
+		for (auto& entry : Overlap)
+		{
+			ReturnArray.Add(entry.GetActor());
+		}
+	}
+	Force->FireImpulse();
+	return ReturnArray;
 }

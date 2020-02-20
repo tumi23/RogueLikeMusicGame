@@ -9,6 +9,8 @@ AA_Missile::AA_Missile()
 {
 	Force = CreateDefaultSubobject<URadialForceComponent>(TEXT("Force Component"));
 	Force->SetupAttachment(RootComponent);
+
+	Damage = 5;
 }
 
 void AA_Missile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
@@ -22,6 +24,6 @@ void AA_Missile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimit
 		UGameplayStatics::ApplyRadialDamage(GetWorld(), Damage, GetActorLocation(), Force->Radius, UDamageType::StaticClass(), ignoredActors, this, nullptr);
 		Force->FireImpulse();
 
-		Destroy();
+		//Destroy();
 	}
 }

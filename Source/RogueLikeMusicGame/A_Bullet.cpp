@@ -12,6 +12,6 @@ void AA_Bullet::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimiti
 	{
 		OtherComp->AddImpulseAtLocation(GetVelocity() * 100.f, GetActorLocation());
 		UGameplayStatics::ApplyDamage(OtherActor, Damage, nullptr, this, UDamageType::StaticClass());
-		Destroy();
+		//Destroy();
 	}
 }

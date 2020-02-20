@@ -21,7 +21,7 @@ class ARogueLikeMusicGameProjectile : public AActor
 	class UProjectileMovementComponent* ProjectileMovement;
 
 public:
-	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+	UPROPERTY(Editanywhere, Category = Projectile)
 		int Damage = 1;
 
 	ARogueLikeMusicGameProjectile();
