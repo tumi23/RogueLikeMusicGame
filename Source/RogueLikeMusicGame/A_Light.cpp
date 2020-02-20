@@ -11,7 +11,7 @@ AA_Light::AA_Light()
 {
 	Light = CreateDefaultSubobject<UPointLightComponent>(TEXT("Light"));
 	Light->SetLightColor(FLinearColor::MakeRandomColor());
-	Light->SetAttenuationRadius(16384.f);
+	Light->SetAttenuationRadius(1500);
 }
 
 void AA_Light::BeginPlay()
