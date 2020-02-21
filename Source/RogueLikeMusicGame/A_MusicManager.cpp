@@ -68,6 +68,7 @@ void AA_MusicManager::StartShopTrack()
 	{
 		MiscComponent->SetSound(ShopTrack);
 		MiscComponent->Play();
+		CurrentPlayingTrack = StartTrack;
 		MiscComponent->FadeIn(1.f);
 	}
 }
@@ -75,7 +76,7 @@ void AA_MusicManager::StartShopTrack()
 void AA_MusicManager::SetNewTrack()
 {
 	if (MiscComponent->IsPlaying())
-		MiscComponent->FadeOut(1.f, 0.f);
+		MiscComponent->Stop();
 	if (MusicTracks.Num() <= 0 && AlreadyPlayedTracks.Num() <= 0)
 		return;
 	if (MusicTracks.Num() <= 0)
