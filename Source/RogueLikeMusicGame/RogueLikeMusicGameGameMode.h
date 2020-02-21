@@ -10,6 +10,15 @@
 #include "RogueLikeMusicGameGameMode.generated.h"
 
 UENUM(BlueprintType)
+enum class EPickups : uint8
+{
+	Ammo,
+	Health,
+	Shield,
+	StarPower,
+};
+
+UENUM(BlueprintType)
 enum class EPlayerUpgrades : uint8
 {
 	DoubleJump,
@@ -58,6 +67,8 @@ public:
 public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Music")
 		AA_MusicManager* MusicManager;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Music")
+		int32 CurrentLevel = 0;
 };
 
 
