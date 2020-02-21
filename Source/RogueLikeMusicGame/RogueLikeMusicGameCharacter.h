@@ -158,6 +158,9 @@ public:
 		int PlayerHealth;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stats)
+		float AKFireRate = 0.25;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stats)
 		float FireRateMultiplier = 0.75;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stats)
@@ -183,6 +186,12 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stats)
 		EWeapons EquippedWeapon = EWeapons::Glock;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stats)
+		int CurrentBroCoins;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stats)
+		int TotalScore;
 
 	//Lists of aquired items
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

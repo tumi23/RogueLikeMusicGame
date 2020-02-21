@@ -241,7 +241,7 @@ void ARogueLikeMusicGameCharacter::FireAK()
 
 	if (bIsHoldingMouse)
 	{
-		GetWorldTimerManager().SetTimer(ShootHoldTimer, this, &ARogueLikeMusicGameCharacter::FireAK, 0.2f * FireRateMultiplier, false);
+		GetWorldTimerManager().SetTimer(ShootHoldTimer, this, &ARogueLikeMusicGameCharacter::FireAK, AKFireRate, false);
 	}
 }
 

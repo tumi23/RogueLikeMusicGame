@@ -10,6 +10,15 @@
 #include "RogueLikeMusicGameGameMode.generated.h"
 
 UENUM(BlueprintType)
+enum class EPickups : uint8
+{
+	Ammo,
+	Health,
+	Shield,
+	StarPower,
+};
+
+UENUM(BlueprintType)
 enum class EPlayerUpgrades : uint8
 {
 	DoubleJump,
