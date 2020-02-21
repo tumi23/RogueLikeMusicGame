@@ -62,6 +62,8 @@ void AA_MusicManager::StartShopTrack()
 		MusicComponent->FadeOut(1.f, 0.f);
 	if (MusicComponent2->IsPlaying())
 		MusicComponent2->FadeOut(1.f, 0.f);
+	if (MiscComponent->IsPlaying())
+		MiscComponent->Stop();
 	if (ShopTrack)
 	{
 		MiscComponent->SetSound(ShopTrack);
